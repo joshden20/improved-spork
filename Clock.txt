@@ -1,0 +1,114 @@
+#Joshua Dennis
+from datetime import datetime
+
+now = datetime.now()
+class Clock:
+
+    def __init__(self, hour = 0, minute = 0, second = 0):
+
+        self.__hour = hour
+        self.__minute = minute
+        self.__second = second
+
+    def hour(self):
+        return self.__hour
+
+    def minute(self):
+        return self.__minute
+
+    def second(self):
+        return self.__second
+
+    def set_hour(self, new_hour):
+        if isinstance(new_hour, int):
+            the_hour = int(new_hour)
+            if 0 <= the_hour < 24:
+                self.__hour = the_hour
+            else:
+                raise ValueError('hour was not between 0 and 24, international time!')
+        else:
+            raise TypeError('new_hour passed to set_minute was not an int')
+
+    def set_minute(self, new_minute):
+        if isinstance(new_minute, int):
+            the_minute = int(new_minute)
+            if 0 <= the_minute < 60:
+                self.__minute = the_minute
+            else:
+                raise ValueError('minute was not between 0 and 60!')
+        else:
+            raise TypeError('new_minute passed to set_minute was not an int')
+
+    def set_second(self, new_second):
+        if isinstance(new_second, int):
+            the_second = int(new_second)
+            if 0 <= the_second < 60:
+                self.__second = the_second
+            else:
+                raise ValueError('second was not between 0 and 60!')
+        else:
+            raise TypeError('new_second passed to set_minute was not an int')
+
+    def __str__(self):
+        return "%s:%s:%s" % (self.__hour, self.__minute, self.__second)
+
+    def __repr__(self):
+        return "%s:%s:%s" % (self.__hour, self.__minute, self.__second)
+
+    def advance_hour(self, amount_to_advance):
+        if isinstance(amount_to_advance, int):
+            time_delta = int(amount_to_advance)
+            if 0 <= time_delta:
+                self.__hour = (self.__hour + time_delta) % 24
+            else:
+                raise ValueError('hour was not between 0 and 24!')
+        else:
+            raise TypeError("amount_to_advance passed to advance_hour was not int...")
+
+    def advance_minute(self, amt_to_advance):
+        if isinstance(amt_to_advance, int):
+            tme_dlta = int(amt_to_advance)
+            if 0 <= tme_dlta:
+                self.advance_hour(tme_dlta // 60)
+                self.__minute = (self.__minute + tme_dlta) % 60
+            else:
+                raise ValueError('hour was not between 0 and 24!')
+        else:
+            raise TypeError("amount_to_advance passed to advance_hour was not int...")
+
+    def set_to_current_time(self):
+        current_time = datetime.now()
+        #ask for the hour, minute, second... current_time.hour() -> self.hour
+
+    def __eq__(self, other):
+        if isinstance(other, Clock):
+            return self.__hour == other.__hour and self.__minute == other.__minute and \
+                self.__second == other.__second
+        return False
+
+    def __lt__(self, other):
+        if isinstance(other, Clock):
+            if self.__hour < other.__hour:
+                return True
+            elif self.__hour == other.__hour and self.__minute < other.__minute:
+                return True
+            elif self.__hour == other.__hour and self.__minute == other.__minute and \
+                    self.__second < other.__second:
+                return True
+            else:
+                return False
+        raise Exception('These clocks are not the same clocks: ' % other)
+
+    def __gt__(self, other):
+        if isinstance(other, Clock):
+            if self.__hour > other.__hour:
+                return True
+            elif self.__hour == other.__hour and self.__minute > other.__minute:
+                return True
+            elif self.__hour == other.__hour and self.__minute == other.__minute and \
+                    self.__second > other.__second:
+                return True
+            else:
+                return False
+        raise Exception('These clocks are not the same clocks: ' % other)
+

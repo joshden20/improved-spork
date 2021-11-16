@@ -1,0 +1,44 @@
+from clock import Clock
+
+from clock import Clock
+
+
+class ClockShop(list):
+
+    def __init__(self):
+        self.__clock_list = []
+
+    def fill_clock_shop(self, list_of_times):
+        for time in list_of_times:
+            hour, minute, second = time.split(":") #split screen where there is a colon
+            self.__clock_list.append(Clock(hour, minute, second))
+
+    def sort_clocks(__clock_list):
+        clocks = __clock_list
+        sorted(clocks)
+        return clocks
+
+    def find_clock(self, a_clock):
+        a_clock = self.fill_clock_shop()
+        for index in range(0, len(a_clock)):
+            if a_clock == self.__clock_list[index]:
+                return index
+        return -1
+
+    def __str__(self):
+        clocks = ""
+        for clock in self.__clock_list:
+            clocks = clocks + clock.__str__() + "\n"
+        return clocks
+
+    def get_clock(self, index):
+        if 0 <= index < len(self.__clock_list):
+            return self.__clock_list[index]
+        raise ValueError("index passed to get_clock not in range.")
+
+    def set_clock(self, a_clock, index):
+        clock_shop = ClockShop()
+        if index:
+            return clock_shop.fill_clock_shop((Clock.set_hour(), Clock.set_minute(), Clock.set_minute))
+
+
